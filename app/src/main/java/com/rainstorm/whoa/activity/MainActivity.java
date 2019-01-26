@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void addDataToRecycleView(int page) {
-        if (10 * page < allRssData.size()) {
+        if (10 * page <= allRssData.size()) {
             usedRssData.addAll(allRssData.subList(0 + 10 * (page - 1), 10 * page));
             adapter.setData(usedRssData);
         }
