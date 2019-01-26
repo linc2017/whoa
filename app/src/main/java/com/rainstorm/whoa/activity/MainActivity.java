@@ -45,7 +45,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ImmersionBar.with(this).statusBarColor(R.color.whoa).fitsSystemWindows(true).supportActionBar(true).init();
-        
+
+        initUI();
+        getRssData();
+    }
+    
+    private void initUI() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -62,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ImageListAdapter(this);
         recyclerView.setAdapter(adapter);
         LoadingUi.getInstance().setDialog(this).show();
-
+    }
+    
+    private void getRssData() {
         OkGo.<String>get(Constant.BASE_URL).tag(this).execute(new StringCallback() {
             @Override
             public void onSuccess(Response<String> response) {
@@ -77,13 +84,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-            
+
             @Override
             public void onError(Response<String> response) {
                 String test = response.body();
             }
         });
-        
     }
 
     private static class ExecHandler extends Handler {

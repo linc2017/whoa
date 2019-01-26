@@ -32,11 +32,18 @@ public class ViewPagerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
         ImmersionBar.with(this).statusBarColor(R.color.whoa).fitsSystemWindows(true).init();
-        
+
+        initIntent();
+        initViewPager();
+    }
+    
+    private void initIntent() {
         Intent intent = getIntent();
         usedRssData = (ArrayList<RssBean>) intent.getSerializableExtra("image_list");
         curPosition = intent.getIntExtra("current_position", 0);
-
+    }
+    
+    private void initViewPager() {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setPageMargin((int) (getResources().getDisplayMetrics().density * 15));
         mPager.setAdapter(new PagerAdapter() {
