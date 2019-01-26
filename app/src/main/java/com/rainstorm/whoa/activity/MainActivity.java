@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<RssBean> allRssData = new ArrayList<>();
     private ArrayList<RssBean> usedRssData = new ArrayList<>();
     private int page = 1;
+    private boolean isScrollToBottom = false;
 
     private ThreadPoolExecutor executor = App.getThreadPool();
     private ExecHandler handler = new ExecHandler(this);
@@ -59,9 +60,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                page++;
-                addDataToRecycleView(page);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && isScrollToBottom) {
+                    page++;
+                    addDataToRecycleView(page);
+                }
                 staggeredGridLayoutManager.invalidateSpanAssignments();
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    isScrollToBottom = true;
+                } else {
+                    isScrollToBottom = false;
+                }
             }
         });
         adapter = new ImageListAdapter(this);
