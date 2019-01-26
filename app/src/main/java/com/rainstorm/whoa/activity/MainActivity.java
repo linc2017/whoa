@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImmersionBar.with(this).statusBarColor(R.color.whoa).fitsSystemWindows(true).init();
+        ImmersionBar.with(this).statusBarColor(R.color.whoa).fitsSystemWindows(true).supportActionBar(true).init();
         
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
