@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
  */
 
 public class ViewPagerScroller extends Scroller {
-    private int mScrollDuration = 1000;
+    private int mScrollDuration = 800;
 
     /**
      *
