@@ -57,6 +57,12 @@ public class ViewPagerActivity extends Activity {
                 view.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 GlideApp.with(ViewPagerActivity.this).load(usedRssData.get(position).imageLink).into(view);
                 container.addView(view);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ViewPagerActivity.this.finish();
+                    }
+                });
                 return view;
             }
 
