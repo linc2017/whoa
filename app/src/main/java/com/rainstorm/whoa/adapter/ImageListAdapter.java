@@ -60,6 +60,9 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Line
             if (oldSize < list.size()) {
                 notifyItemInserted(oldSize - 1);
             }
+            // TODO: If we use waterfall,download images with scale would be better.
+            // But if app need to calculate scale,we may pre-download a page,for example,if user on page 2 now,we will download page 3 to calculate,though maybe user don't want to watch page 3. 
+            // If app need to calculate scale,means no really good way to implement waterfall.
             setImageScale();
         }
     }
