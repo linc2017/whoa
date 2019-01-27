@@ -61,9 +61,8 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Line
                 notifyItemInserted(oldSize - 1);
             }
             // TODO: If we use waterfall,download images with scale would be better.
-            // But if app need to calculate scale,we may pre-download a page,for example,if user on page 2 now,we will download page 3 to calculate,though maybe user don't want to watch page 3. 
-            // If app need to calculate scale,means no really good way to implement waterfall.
-            // Or we could use a complicated way to design a custom waterfall:first download an image,then calculate scale,at last dynamically add an ImageView to the RecyclerView.
+            // But if app need to calculate scale,we may pre-download a page,for example,if user on page 2 now,we will download page 3 to calculate,though maybe user don't want to watch page 3.
+            // If app need to calculate scale,maybe means no really good way to implement waterfall.
             setImageScale();
         }
     }
