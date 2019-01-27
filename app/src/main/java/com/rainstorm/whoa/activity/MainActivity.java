@@ -61,8 +61,14 @@ public class MainActivity extends AppCompatActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && isScrollToBottom) {
-                    page++;
-                    addDataToRecycleView(page);
+                    int[] lastVisiblePositions = staggeredGridLayoutManager.findLastVisibleItemPositions(new int[staggeredGridLayoutManager.getSpanCount()]);
+                    int lastVisiblePos = getMaxElem(lastVisiblePositions);
+                    int totalItemCount = staggeredGridLayoutManager.getItemCount();
+                    
+                    if (lastVisiblePos == (totalItemCount -1) && isScrollToBottom) {
+                        page++;
+                        addDataToRecycleView(page);
+                    }
                 }
                 staggeredGridLayoutManager.invalidateSpanAssignments();
             }
@@ -133,5 +139,15 @@ public class MainActivity extends AppCompatActivity {
             usedRssData.addAll(allRssData.subList(0 + 10 * (page - 1), 10 * page));
             adapter.setData(usedRssData);
         }
+    }
+
+    private int getMaxElem(int[] arr) {
+        int size = arr.length;
+        int maxVal = Integer.MIN_VALUE;
+        for (int i = 0; i < size; i++) {
+            if (arr[i]>maxVal)
+                maxVal = arr[i];
+        }
+        return maxVal;
     }
 }
