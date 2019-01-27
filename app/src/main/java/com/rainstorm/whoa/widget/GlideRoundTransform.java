@@ -1,4 +1,4 @@
-package com.rainstorm.whoa.utlis;
+package com.rainstorm.whoa.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
