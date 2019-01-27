@@ -1,4 +1,4 @@
-package com.rainstorm.whoa.utlis;
+package com.rainstorm.whoa;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
