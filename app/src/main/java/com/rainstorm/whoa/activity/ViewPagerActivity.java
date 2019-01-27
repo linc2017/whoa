@@ -13,7 +13,7 @@ import com.bm.library.PhotoView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.rainstorm.whoa.R;
 import com.rainstorm.whoa.bean.RssBean;
-import com.rainstorm.whoa.utlis.GlideApp;
+import com.rainstorm.whoa.GlideApp;
 import com.rainstorm.whoa.widget.ViewPagerScroller;
 
 import java.util.ArrayList;

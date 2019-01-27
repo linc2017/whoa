@@ -18,7 +18,7 @@ import com.rainstorm.whoa.R;
 import com.rainstorm.whoa.activity.ViewPagerActivity;
 import com.rainstorm.whoa.bean.RssBean;
 import com.rainstorm.whoa.utlis.DisplayUtils;
-import com.rainstorm.whoa.utlis.GlideApp;
+import com.rainstorm.whoa.GlideApp;
 import com.rainstorm.whoa.widget.GlideRoundTransform;
 
 import java.util.ArrayList;
