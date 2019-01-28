@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     int lastVisiblePos = getMaxElem(lastVisiblePositions);
                     int totalItemCount = staggeredGridLayoutManager.getItemCount();
                     
-                    if (lastVisiblePos == (totalItemCount -1) && isScrollToBottom) {
+                    if (lastVisiblePos == (totalItemCount -1)) {
                         page++;
                         addDataToRecycleView(page);
                     }
