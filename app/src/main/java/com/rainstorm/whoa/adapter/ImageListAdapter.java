@@ -48,7 +48,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Line
         layoutParams.width = DisplayUtils.getScreenWidth((Activity) mContext) / 2 - DisplayUtils.dp2px(mContext,2);
         layoutParams.height = layoutParams.width;
         
-        GlideApp.with(mContext).load(usedRssData.get(position).imageLink).placeholder(R.color.mistyrose).override(200, 200).into(holder.imageView);
+        GlideApp.with(mContext).load(usedRssData.get(position).imageLink).placeholder(R.color.mistyrose).override(300, 300).into(holder.imageView);
     }
     
     public void setData(ArrayList<RssBean> list) {
