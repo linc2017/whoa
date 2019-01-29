@@ -6,20 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.rainstorm.whoa.activity.MainActivity">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableRefresh="false"
-        app:srlEnableLoadmore="true"
-        app:srlEnableLoadmoreWhenContentNotFull="true">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#EEEEEE"
-            tools:context=".ui.MainActivity" />
-
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        android:background="#EEEEEE"
+        tools:context=".ui.MainActivity" />
 
 </android.support.constraint.ConstraintLayout>

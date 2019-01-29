@@ -46,9 +46,11 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Line
         RssBean rssBean = usedRssData.get(position);
         final ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
         layoutParams.width = DisplayUtils.getScreenWidth((Activity) mContext) / 2 - DisplayUtils.dp2px(mContext,2);
-        layoutParams.height = layoutParams.width;
+        if(rssBean.scale != 0){
+            layoutParams.height = (int) (layoutParams.width / rssBean.scale);
+        }
         
-        GlideApp.with(mContext).load(usedRssData.get(position).imageLink).placeholder(R.color.mistyrose).override(200, 200).into(holder.imageView);
+        GlideApp.with(mContext).load(usedRssData.get(position).imageLink).placeholder(R.color.mistyrose).transform(new GlideRoundTransform(mContext, 2)).into(holder.imageView);
     }
     
     public void setData(ArrayList<RssBean> list) {
@@ -57,6 +59,26 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Line
             this.usedRssData = list;
             if (oldSize < list.size()) {
                 notifyItemInserted(oldSize - 1);
+            }
+            // TODO: Here to calculate scale maybe is not right,but let user see the picture first would be better.
+            // If app need to calculate scale,we may pre-download a page,for example,if user on page 2 now,we will download page 3 to calculate,
+            // though maybe user don't want to watch page 3,and also means user need to wait more time to see the picture.
+            // If we implement waterfall,download images with scale would be best.
+            // If app need to calculate scale,maybe means no really good way to implement waterfall.
+            setImageScale();
+        }
+    }
+    
+    private void setImageScale() {
+        for (final RssBean rssBean : usedRssData) {
+            if(rssBean.scale == 0){
+                GlideApp.with(mContext).load(rssBean.imageLink).into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        float scale = resource.getIntrinsicWidth() / (float) resource.getIntrinsicHeight();
+                        rssBean.scale = scale;
+                    }
+                });
             }
         }
     }

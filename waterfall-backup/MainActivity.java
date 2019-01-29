@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RSS_PARSED = 1;
     
     private RecyclerView recyclerView;
-    private GridLayoutManager gridLayoutManager;
+    private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private ImageListAdapter adapter;
     private String rssStr;
     private ArrayList<RssBean> allRssData = new ArrayList<>();
@@ -54,21 +53,24 @@ public class MainActivity extends AppCompatActivity {
     
     private void initUI() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        gridLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && isScrollToBottom) {
-                    int lastVisiblePos = gridLayoutManager.findLastVisibleItemPosition();
-                    int totalItemCount = gridLayoutManager.getItemCount();
+                    int[] lastVisiblePositions = staggeredGridLayoutManager.findLastVisibleItemPositions(new int[staggeredGridLayoutManager.getSpanCount()]);
+                    int lastVisiblePos = getMaxElem(lastVisiblePositions);
+                    int totalItemCount = staggeredGridLayoutManager.getItemCount();
                     
-                    if (lastVisiblePos >= (totalItemCount -1)) {
+                    if (lastVisiblePos == (totalItemCount -1)) {
                         page++;
                         addDataToRecycleView(page);
                     }
                 }
+                staggeredGridLayoutManager.invalidateSpanAssignments();
             }
 
             @Override
