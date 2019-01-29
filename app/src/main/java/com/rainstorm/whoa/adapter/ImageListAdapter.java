@@ -43,7 +43,6 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Line
 
     @Override
     public void onBindViewHolder(final ImageListAdapter.LinearViewHolder holder, int position) {
-        RssBean rssBean = usedRssData.get(position);
         final ViewGroup.LayoutParams layoutParams = holder.imageView.getLayoutParams();
         layoutParams.width = DisplayUtils.getScreenWidth((Activity) mContext) / 2 - DisplayUtils.dp2px(mContext,2);
         layoutParams.height = layoutParams.width;
