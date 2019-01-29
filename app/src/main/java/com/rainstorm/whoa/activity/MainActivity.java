@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<RssBean> allRssData = new ArrayList<>();
     private ArrayList<RssBean> usedRssData = new ArrayList<>();
     private int page = 1;
-    private boolean isScrollToBottom = false;
 
     private ThreadPoolExecutor executor = App.getThreadPool();
     private ExecHandler handler = new ExecHandler(this);
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && isScrollToBottom) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     int lastVisiblePos = gridLayoutManager.findLastVisibleItemPosition();
                     int totalItemCount = gridLayoutManager.getItemCount();
                     
@@ -68,16 +67,6 @@ public class MainActivity extends AppCompatActivity {
                         page++;
                         addDataToRecycleView(page);
                     }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
-                    isScrollToBottom = true;
-                } else {
-                    isScrollToBottom = false;
                 }
             }
         });
