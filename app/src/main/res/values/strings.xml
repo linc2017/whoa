@@ -11,5 +11,5 @@
         <item>@android:color/black</item>
     </integer-array>
     
-    <string name="load_images_complete">All images have been downloaded</string>
+    <string name="load_images_complete">All images have been downloaded.</string>
 </resources>
