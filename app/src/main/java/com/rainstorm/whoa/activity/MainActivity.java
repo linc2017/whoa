@@ -59,33 +59,22 @@ public class MainActivity extends AppCompatActivity {
     
     private void initUI() {
         smartRefresh = (SmartRefreshLayout) findViewById(R.id.smart_refresh);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        adapter = new ImageListAdapter(this);
+        recyclerView.setAdapter(adapter);
         smartRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
+                page++;
+                addDataToRecycleView(page);
                 smartRefresh.finishLoadmore();
                 if (hasCompleted) {
                     Toast.makeText(getApplicationContext(), getString(R.string.load_images_complete), Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        gridLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                int lastVisiblePos = gridLayoutManager.findLastVisibleItemPosition();
-                int totalItemCount = gridLayoutManager.getItemCount();
-
-                if (lastVisiblePos >= (totalItemCount -1)) {
-                    page++;
-                    addDataToRecycleView(page);
-                }
-            }
-        });
-        adapter = new ImageListAdapter(this);
-        recyclerView.setAdapter(adapter);
         LoadingUi.getInstance().setDialog(this).show();
     }
     

@@ -54,7 +54,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.Line
         if (null != list) {
             oldSize = this.usedRssData.size();
             this.usedRssData = list;
-            if (oldSize < list.size()) {
+            if (oldSize <= list.size()) {
                 notifyItemInserted(oldSize - 1);
             }
         }
