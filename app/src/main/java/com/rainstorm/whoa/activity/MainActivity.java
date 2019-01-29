@@ -75,14 +75,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    int lastVisiblePos = gridLayoutManager.findLastVisibleItemPosition();
-                    int totalItemCount = gridLayoutManager.getItemCount();
-                    
-                    if (lastVisiblePos >= (totalItemCount -1)) {
-                        page++;
-                        addDataToRecycleView(page);
-                    }
+                int lastVisiblePos = gridLayoutManager.findLastVisibleItemPosition();
+                int totalItemCount = gridLayoutManager.getItemCount();
+
+                if (lastVisiblePos >= (totalItemCount -1)) {
+                    page++;
+                    addDataToRecycleView(page);
                 }
             }
         });
