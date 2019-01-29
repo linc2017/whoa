@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
@@ -19,6 +20,9 @@ import com.rainstorm.whoa.base.Constant;
 import com.rainstorm.whoa.bean.RssBean;
 import com.rainstorm.whoa.widget.LoadingUi;
 import com.rainstorm.whoa.utlis.RssParser;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -29,7 +33,8 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class MainActivity extends AppCompatActivity {
     private static final int RSS_PARSED = 1;
-    
+
+    SmartRefreshLayout smartRefresh;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     private ImageListAdapter adapter;
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<RssBean> allRssData = new ArrayList<>();
     private ArrayList<RssBean> usedRssData = new ArrayList<>();
     private int page = 1;
+    private boolean hasCompleted = false;
 
     private ThreadPoolExecutor executor = App.getThreadPool();
     private ExecHandler handler = new ExecHandler(this);
@@ -52,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void initUI() {
+        smartRefresh = (SmartRefreshLayout) findViewById(R.id.smart_refresh);
+        smartRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                smartRefresh.finishLoadmore();
+                if (hasCompleted) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.load_images_complete), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -125,16 +141,8 @@ public class MainActivity extends AppCompatActivity {
         if (10 * page <= allRssData.size()) {
             usedRssData.addAll(allRssData.subList(0 + 10 * (page - 1), 10 * page));
             adapter.setData(usedRssData);
+        } else {
+            hasCompleted = true;
         }
-    }
-
-    private int getMaxElem(int[] arr) {
-        int size = arr.length;
-        int maxVal = Integer.MIN_VALUE;
-        for (int i = 0; i < size; i++) {
-            if (arr[i]>maxVal)
-                maxVal = arr[i];
-        }
-        return maxVal;
     }
 }
